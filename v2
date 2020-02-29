@@ -1,0 +1,59 @@
+import numpy as np
+import collections 
+
+#random array with lenght 15
+#randnums = [1 ,2, 3 ,1 ,1 ,2, 3, 4, 3, 5, 4 ,1 ,2, 3, 3, 1, 1, 5,1,1,1]
+randnums = np.random.randint(1,6,100)
+#end value till where we need to validate array
+x = (len(randnums) - 2)
+count = 0
+sequence = 0
+newArr = []
+print(randnums)
+
+def validateArray(a, b):
+    if a/b == 1:
+        return 1
+    return 0
+
+def isRepeatSequence(list_search,Input):       
+    # Using Counter 
+    for elem in Input: 
+        if collections.Counter(elem) == collections.Counter(list_search) : 
+            return True
+    return False
+        
+def getuniquecount():
+    dat_list = []
+    for x in range (len(randnums) -1):
+        repVal = 0
+        if x > 0:
+            for sequence in range(len(randnums) -1):
+                newArrStart = sequence
+                newArrEnd = sequence + x
+                newArr = randnums[newArrStart:newArrEnd+1]
+                sequence +=1
+                repVal = 0
+                saveRepeatVal = "None"
+
+                for i in range(len(randnums) - 1):
+                    
+                    #if not any(newArr in s for s in dat_list):
+                    if not isRepeatSequence(newArr,dat_list):
+                        
+                        if repVal > 1 and i == len(randnums) -2:
+                            #validated array needs to be add to a common array here 
+                            print("This sequence is newArr{} is repeating {} times".format(newArr,repVal))
+                            dat_list.append(newArr)
+                        if i > 1:
+                            newVal = i+len(newArr)
+                            vali = i
+                            chk = list(map(validateArray,newArr,randnums[vali:newVal]))                          
+                            if all(chk):
+                                repVal += 1
+                            
+                        
+                    
+
+getuniquecount()
+        
